@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Car, Users, MapPin, Star, TrendingUp, Shield } from 'lucide-react';
+import HomeSlider from '@/components/HomeSlider';
 
 const Index = () => {
   const stats = [
@@ -62,39 +63,9 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary/5 to-secondary/5 py-20">
-        <div className="container mx-auto px-4 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Voyagez <span className="text-gradient">ensemble</span>,
-            <br />
-            économisez <span className="text-gradient">malin</span>
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            COVO réunit covoiturage et location de véhicules pour des déplacements
-            économiques, écologiques et conviviaux dans toute la région.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/covoiturage/search">
-              <Button size="lg" className="w-full sm:w-auto">
-                <MapPin className="mr-2 h-5 w-5" />
-                Trouver un trajet
-              </Button>
-            </Link>
-            <Link to="/covoiturage/create">
-              <Button size="lg" variant="outline" className="w-full sm:w-auto">
-                <Car className="mr-2 h-5 w-5" />
-                Proposer un trajet
-              </Button>
-            </Link>
-            <Link to="/location">
-              <Button size="lg" variant="secondary" className="w-full sm:w-auto">
-                <Users className="mr-2 h-5 w-5" />
-                Louer un véhicule
-              </Button>
-            </Link>
-          </div>
-        </div>
+      {/* Section Accueil modernisée */}
+      <section className="relative bg-gradient-to-br from-primary/5 to-secondary/5 py-8">
+        <HomeSlider />
       </section>
 
       {/* Stats Section */}
