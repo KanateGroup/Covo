@@ -1,11 +1,20 @@
 
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Car, Eye, EyeOff, Mail, Lock } from 'lucide-react';
+<<<<<<< HEAD
+=======
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -13,11 +22,52 @@ const Login = () => {
     email: '',
     password: '',
   });
+<<<<<<< HEAD
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Login attempt:', formData);
     // Ici vous intégrerez l'authentification avec votre backend
+=======
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { toast } = useToast();
+  
+  // Récupérer l'URL de retour depuis l'état de location
+  const from = location.state?.from?.pathname || '/dashboard';
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    
+    try {
+      const success = await login(formData.email, formData.password);
+      if (success) {
+        toast({
+          title: "Connexion réussie",
+          description: "Bienvenue sur COVO !",
+        });
+        navigate(from);
+      } else {
+        toast({
+          title: "Erreur de connexion",
+          description: "Email ou mot de passe incorrect",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la connexion",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -89,8 +139,13 @@ const Login = () => {
               </Link>
             </div>
 
+<<<<<<< HEAD
             <Button type="submit" className="w-full">
               Se connecter
+=======
+            <Button type="submit" className="w-full" disabled={isSubmitting}>
+              {isSubmitting ? 'Connexion...' : 'Se connecter'}
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
             </Button>
           </form>
 

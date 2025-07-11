@@ -2,10 +2,27 @@
 import React from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+<<<<<<< HEAD
 import { Car, Home, Users, MapPin, Settings, AlertTriangle } from 'lucide-react';
 
 const Navigation = () => {
   const location = useLocation();
+=======
+import { Car, Home, Users, MapPin, Settings, AlertTriangle, LogOut, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+
+const Navigation = () => {
+  const location = useLocation();
+  const { user, isAuthenticated, logout } = useAuth();
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   
   const isActive = (path: string) => {
     return location.pathname === path || location.pathname.startsWith(path + '/');
@@ -70,6 +87,7 @@ const Navigation = () => {
           </div>
 
           <div className="flex items-center space-x-3">
+<<<<<<< HEAD
             <Link to="/login">
               <Button variant="outline" size="sm">
                 Connexion
@@ -80,6 +98,70 @@ const Navigation = () => {
                 Inscription
               </Button>
             </Link>
+=======
+            {isAuthenticated ? (
+              <>
+                <Link to="/dashboard">
+                  <Button variant="ghost" size="sm">
+                    <User className="mr-2 h-4 w-4" />
+                    Tableau de bord
+                  </Button>
+                </Link>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="sm" className="relative h-8 w-8 rounded-full">
+                      <Avatar className="h-8 w-8">
+                        <AvatarFallback>
+                          {user?.firstName?.charAt(0)}{user?.lastName?.charAt(0)}
+                        </AvatarFallback>
+                      </Avatar>
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent className="w-56" align="end" forceMount>
+                    <div className="flex items-center justify-start gap-2 p-2">
+                      <div className="flex flex-col space-y-1 leading-none">
+                        <p className="font-medium">{user?.firstName} {user?.lastName}</p>
+                        <p className="w-[200px] truncate text-sm text-muted-foreground">
+                          {user?.email}
+                        </p>
+                      </div>
+                    </div>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
+                      <Link to="/dashboard">
+                        <User className="mr-2 h-4 w-4" />
+                        Mon profil
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/admin">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Administration
+                      </Link>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem onClick={logout}>
+                      <LogOut className="mr-2 h-4 w-4" />
+                      Se déconnecter
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </>
+            ) : (
+              <>
+                <Link to="/login">
+                  <Button variant="outline" size="sm">
+                    Connexion
+                  </Button>
+                </Link>
+                <Link to="/register">
+                  <Button size="sm">
+                    Inscription
+                  </Button>
+                </Link>
+              </>
+            )}
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
           </div>
         </div>
       </div>

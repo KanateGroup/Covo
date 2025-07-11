@@ -1,16 +1,29 @@
 
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
+=======
+import { Link, useNavigate } from 'react-router-dom';
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Car, Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
+<<<<<<< HEAD
+=======
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+<<<<<<< HEAD
+=======
+  const [isSubmitting, setIsSubmitting] = useState(false);
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -21,10 +34,62 @@ const Register = () => {
     acceptTerms: false,
   });
 
+<<<<<<< HEAD
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Registration attempt:', formData);
     // Ici vous intégrerez l'inscription avec votre backend
+=======
+  const { register } = useAuth();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Erreur",
+        description: "Les mots de passe ne correspondent pas",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    setIsSubmitting(true);
+    
+    try {
+      const success = await register({
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+      });
+      
+      if (success) {
+        toast({
+          title: "Inscription réussie",
+          description: "Votre compte a été créé avec succès !",
+        });
+        navigate('/dashboard');
+      } else {
+        toast({
+          title: "Erreur d'inscription",
+          description: "Une erreur est survenue lors de la création du compte",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de l'inscription",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,8 +244,13 @@ const Register = () => {
               </Label>
             </div>
 
+<<<<<<< HEAD
             <Button type="submit" className="w-full" disabled={!formData.acceptTerms}>
               Créer mon compte
+=======
+            <Button type="submit" className="w-full" disabled={!formData.acceptTerms || isSubmitting}>
+              {isSubmitting ? 'Création du compte...' : 'Créer mon compte'}
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
             </Button>
           </form>
 

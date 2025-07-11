@@ -7,6 +7,12 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, Search, MapPin, Clock, Users, Star, Car } from 'lucide-react';
+<<<<<<< HEAD
+=======
+import { useTrips } from '@/contexts/TripContext';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 
 const SearchTrips = () => {
   const [searchData, setSearchData] = useState({
@@ -16,8 +22,17 @@ const SearchTrips = () => {
     time: '',
   });
 
+<<<<<<< HEAD
   const [searchResults, setSearchResults] = useState([]);
   const [hasSearched, setHasSearched] = useState(false);
+=======
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
+  
+  const { searchTrips, bookTrip, isLoading } = useTrips();
+  const { isAuthenticated } = useAuth();
+  const { toast } = useToast();
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 
   // Mock data pour les résultats de recherche
   const mockTrips = [
@@ -86,6 +101,7 @@ const SearchTrips = () => {
     },
   ];
 
+<<<<<<< HEAD
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Recherche de trajets:', searchData);
@@ -96,6 +112,49 @@ const SearchTrips = () => {
   const handleReserve = (tripId: number) => {
     console.log('Réservation du trajet:', tripId);
     // Ici vous ajouterez la logique de réservation
+=======
+  const handleSearch = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const results = await searchTrips(searchData);
+    setSearchResults(results);
+    setHasSearched(true);
+  };
+
+  const handleReserve = async (tripId: string) => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Connexion requise",
+        description: "Vous devez être connecté pour réserver un trajet",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    try {
+      const success = await bookTrip(tripId);
+      if (success) {
+        toast({
+          title: "Réservation réussie",
+          description: "Votre trajet a été réservé avec succès !",
+        });
+        // Recharger les résultats de recherche
+        const results = await searchTrips(searchData);
+        setSearchResults(results);
+      } else {
+        toast({
+          title: "Erreur de réservation",
+          description: "Impossible de réserver ce trajet",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erreur",
+        description: "Une erreur est survenue lors de la réservation",
+        variant: "destructive",
+      });
+    }
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -193,9 +252,15 @@ const SearchTrips = () => {
                   </div>
                 </div>
               </div>
+<<<<<<< HEAD
               <Button type="submit" className="w-full">
                 <Search className="mr-2 h-4 w-4" />
                 Rechercher des trajets
+=======
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                <Search className="mr-2 h-4 w-4" />
+                {isLoading ? 'Recherche...' : 'Rechercher des trajets'}
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
               </Button>
             </form>
           </CardContent>

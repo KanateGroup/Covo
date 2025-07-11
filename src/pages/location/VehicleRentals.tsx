@@ -1,6 +1,9 @@
 
 import React, { useState } from 'react';
+<<<<<<< HEAD
 import { useNavigate } from 'react-router-dom';
+=======
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -9,7 +12,10 @@ import { Badge } from '@/components/ui/badge';
 import { Car, Bike, Zap, MapPin, Clock, DollarSign, Filter } from 'lucide-react';
 
 const VehicleRentals = () => {
+<<<<<<< HEAD
   const navigate = useNavigate();
+=======
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   const [filters, setFilters] = useState({
     type: 'all',
     location: '',
@@ -20,7 +26,11 @@ const VehicleRentals = () => {
   const vehicles = [
     {
       id: 1,
+<<<<<<< HEAD
       type: 'voiture',
+=======
+      type: 'car',
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
       name: 'Renault Clio',
       image: '/placeholder.svg?height=200&width=300',
       hourlyRate: 1500,
@@ -44,18 +54,27 @@ const VehicleRentals = () => {
     },
     {
       id: 3,
+<<<<<<< HEAD
       type: 'trottinette',
+=======
+      type: 'electric',
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
       name: 'Trottinette électrique',
       image: '/placeholder.svg?height=200&width=300',
       hourlyRate: 500,
       dailyRate: 3000,
       station: 'Station Université',
+<<<<<<< HEAD
       available: true,
+=======
+      available: false,
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
       features: ['Autonomie 25km', 'Pliable', 'App mobile'],
       partner: 'EcoRide',
     },
     {
       id: 4,
+<<<<<<< HEAD
       type: 'tricycle',
       name: 'Tricycle urbain',
       image: '/placeholder.svg?height=200&width=300',
@@ -78,26 +97,52 @@ const VehicleRentals = () => {
       features: ['Gilet de sauvetage', '2 places', 'GPS'],
       partner: 'SeaRide',
     },
+=======
+      type: 'bike',
+      name: 'Vélo urbain',
+      image: '/placeholder.svg?height=200&width=300',
+      hourlyRate: 300,
+      dailyRate: 2000,
+      station: 'Station Médina',
+      available: true,
+      features: ['Antivol', 'Panier', 'Éclairage LED'],
+      partner: 'BikeCity',
+    },
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   ];
 
   const getVehicleIcon = (type: string) => {
     switch (type) {
+<<<<<<< HEAD
       case 'voiture': return Car;
       case 'scooter': return Bike;
       case 'trottinette': return Zap;
       case 'tricycle': return Bike;
       case 'jetski': return Car;
+=======
+      case 'car': return Car;
+      case 'scooter': return Bike;
+      case 'electric': return Zap;
+      case 'bike': return Bike;
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
       default: return Car;
     }
   };
 
   const getVehicleTypeLabel = (type: string) => {
     switch (type) {
+<<<<<<< HEAD
       case 'voiture': return 'Voiture';
       case 'scooter': return 'Scooter';
       case 'trottinette': return 'Trottinette électrique';
       case 'tricycle': return 'Tricycle';
       case 'jetski': return 'Jetski';
+=======
+      case 'car': return 'Voiture';
+      case 'scooter': return 'Scooter';
+      case 'electric': return 'Trottinette électrique';
+      case 'bike': return 'Vélo';
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
       default: return type;
     }
   };
@@ -109,6 +154,7 @@ const VehicleRentals = () => {
     return true;
   });
 
+<<<<<<< HEAD
   const handleRent = (vehicle: any) => {
     console.log('🚗 Véhicule sélectionné:', vehicle); // Debug
     
@@ -129,6 +175,11 @@ const VehicleRentals = () => {
     
     // Redirection vers le formulaire de réservation
     navigate('/location/book');
+=======
+  const handleRent = (vehicleId: number) => {
+    console.log('Rent vehicle:', vehicleId);
+    // Redirection vers la page de réservation
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
   };
 
   return (
@@ -155,11 +206,18 @@ const VehicleRentals = () => {
                   className="w-full p-2 border rounded-md"
                 >
                   <option value="all">Tous les types</option>
+<<<<<<< HEAD
                   <option value="voiture">Voitures</option>
                   <option value="scooter">Scooters</option>
                   <option value="trottinette">Trottinettes électriques</option>
                   <option value="tricycle">Tricycles</option>
                   <option value="jetski">Jetskis</option>
+=======
+                  <option value="car">Voitures</option>
+                  <option value="scooter">Scooters</option>
+                  <option value="electric">Trottinettes électriques</option>
+                  <option value="bike">Vélos</option>
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
                 </select>
               </div>
               <div className="space-y-2">
@@ -244,7 +302,11 @@ const VehicleRentals = () => {
                       <div className="text-sm text-muted-foreground">{rateLabel}</div>
                     </div>
                     <Button 
+<<<<<<< HEAD
                       onClick={() => handleRent(vehicle)}
+=======
+                      onClick={() => handleRent(vehicle.id)}
+>>>>>>> 7c9efa47a3e67421cce26e773fe75c432e371e10
                       disabled={!vehicle.available}
                       className="ml-4"
                     >
