@@ -21,6 +21,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import Emergency from "./pages/Emergency";
 import AgentScan from "./pages/AgentScan";
 import NotFound from "./pages/NotFound";
+import AgentLogin from './pages/AgentLogin';
+import AgentDashboard from './pages/AgentDashboard';
 
 const queryClient = new QueryClient();
 
@@ -74,6 +76,8 @@ const App = () => (
                     <AgentScan />
                   </ProtectedRoute>
                 } />
+                <Route path="/agent/login" element={<AgentLogin />} />
+                <Route path="/agent/dashboard" element={<AgentDashboard />} />
                 
                 {/* Route catch-all */}
                 <Route path="*" element={<NotFound />} />

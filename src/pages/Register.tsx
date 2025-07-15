@@ -9,6 +9,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Car, Eye, EyeOff, Mail, Lock, User, Phone } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
 import { useToast } from '@/hooks/use-toast';
+import { motion } from 'framer-motion';
 
 const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -84,53 +85,101 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/5 to-secondary/5 flex items-center justify-center p-4">
-      <Card className="w-full max-w-md">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] flex items-center justify-center pt-20 p-4 relative overflow-hidden">
+      {/* Effet de fond animé */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1a13]/20 via-[#0e2233]/20 to-[#1a2a2f]/20 backdrop-blur-sm" />
+      
+      {/* Particules flottantes */}
+      <div className="absolute inset-0 overflow-hidden">
+        {[...Array(25)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute w-1 h-1 bg-[#b6ffb0]/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.3, 0.8, 0.3],
+            }}
+            transition={{
+              duration: 4 + Math.random() * 3,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+            }}
+          />
+        ))}
+      </div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
+        className="relative z-10 w-full max-w-lg"
+      >
+        <Card className="backdrop-blur-xl bg-white/5 border-white/10 shadow-2xl">
         <CardHeader className="text-center">
-          <div className="flex items-center justify-center mb-4">
-            <Car className="h-10 w-10 text-primary" />
-            <span className="text-3xl font-bold text-gradient ml-2">COVO</span>
-          </div>
-          <CardTitle className="text-2xl">Inscription</CardTitle>
-          <CardDescription>
+            <motion.div 
+              className="flex items-center justify-center mb-6"
+              initial={{ scale: 0.8 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              <Car className="h-12 w-12 text-[#b6ffb0]" />
+              <span className="text-4xl font-bold text-white ml-3">COVO</span>
+            </motion.div>
+            <CardTitle className="text-2xl text-white mb-2">Inscription</CardTitle>
+            <CardDescription className="text-white/70 text-base">
             Créez votre compte pour commencer à voyager
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <motion.div 
+                className="grid grid-cols-2 gap-4"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.3, duration: 0.5 }}
+              >
               <div className="space-y-2">
-                <Label htmlFor="firstName">Prénom</Label>
+                  <Label htmlFor="firstName" className="text-white/90">Prénom</Label>
                 <div className="relative">
-                  <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                    <User className="absolute left-3 top-3 h-5 w-5 text-[#b6ffb0]" />
                   <Input
                     id="firstName"
                     name="firstName"
                     placeholder="Prénom"
                     value={formData.firstName}
                     onChange={handleChange}
-                    className="pl-10"
+                      className="pl-12 bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-[#b6ffb0] focus:ring-[#b6ffb0]/20"
                     required
                   />
                 </div>
               </div>
               <div className="space-y-2">
-                <Label htmlFor="lastName">Nom</Label>
+                  <Label htmlFor="lastName" className="text-white/90">Nom</Label>
                 <Input
                   id="lastName"
                   name="lastName"
                   placeholder="Nom"
                   value={formData.lastName}
                   onChange={handleChange}
+                    className="bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-[#b6ffb0] focus:ring-[#b6ffb0]/20"
                   required
                 />
               </div>
-            </div>
+              </motion.div>
 
-            <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <motion.div 
+                className="space-y-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.4, duration: 0.5 }}
+              >
+                <Label htmlFor="email" className="text-white/90">Email</Label>
               <div className="relative">
-                <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Mail className="absolute left-3 top-3 h-5 w-5 text-[#b6ffb0]" />
                 <Input
                   id="email"
                   name="email"
@@ -138,16 +187,21 @@ const Register = () => {
                   placeholder="votre@email.com"
                   value={formData.email}
                   onChange={handleChange}
-                  className="pl-10"
+                    className="pl-12 bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-[#b6ffb0] focus:ring-[#b6ffb0]/20"
                   required
                 />
               </div>
-            </div>
+              </motion.div>
 
-            <div className="space-y-2">
-              <Label htmlFor="phone">Téléphone</Label>
+              <motion.div 
+                className="space-y-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.5, duration: 0.5 }}
+              >
+                <Label htmlFor="phone" className="text-white/90">Téléphone</Label>
               <div className="relative">
-                <Phone className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Phone className="absolute left-3 top-3 h-5 w-5 text-[#b6ffb0]" />
                 <Input
                   id="phone"
                   name="phone"
@@ -155,16 +209,21 @@ const Register = () => {
                   placeholder="77 123 45 67"
                   value={formData.phone}
                   onChange={handleChange}
-                  className="pl-10"
+                    className="pl-12 bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-[#b6ffb0] focus:ring-[#b6ffb0]/20"
                   required
                 />
               </div>
-            </div>
+              </motion.div>
             
-            <div className="space-y-2">
-              <Label htmlFor="password">Mot de passe</Label>
+              <motion.div 
+                className="space-y-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6, duration: 0.5 }}
+              >
+                <Label htmlFor="password" className="text-white/90">Mot de passe</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-[#b6ffb0]" />
                 <Input
                   id="password"
                   name="password"
@@ -172,23 +231,28 @@ const Register = () => {
                   placeholder="Mot de passe"
                   value={formData.password}
                   onChange={handleChange}
-                  className="pl-10 pr-10"
+                    className="pl-12 pr-12 bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-[#b6ffb0] focus:ring-[#b6ffb0]/20"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-3 text-[#b6ffb0] hover:text-white transition-colors"
                 >
-                  {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-            </div>
+              </motion.div>
 
-            <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirmer le mot de passe</Label>
+              <motion.div 
+                className="space-y-2"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.7, duration: 0.5 }}
+              >
+                <Label htmlFor="confirmPassword" className="text-white/90">Confirmer le mot de passe</Label>
               <div className="relative">
-                <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                  <Lock className="absolute left-3 top-3 h-5 w-5 text-[#b6ffb0]" />
                 <Input
                   id="confirmPassword"
                   name="confirmPassword"
@@ -196,20 +260,25 @@ const Register = () => {
                   placeholder="Confirmer le mot de passe"
                   value={formData.confirmPassword}
                   onChange={handleChange}
-                  className="pl-10 pr-10"
+                    className="pl-12 pr-12 bg-white/5 border-white/20 text-white placeholder:text-white/50 focus:border-[#b6ffb0] focus:ring-[#b6ffb0]/20"
                   required
                 />
                 <button
                   type="button"
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  className="absolute right-3 top-3 text-muted-foreground hover:text-foreground"
+                    className="absolute right-3 top-3 text-[#b6ffb0] hover:text-white transition-colors"
                 >
-                  {showConfirmPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                    {showConfirmPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
               </div>
-            </div>
+              </motion.div>
 
-            <div className="flex items-center space-x-2">
+              <motion.div 
+                className="flex items-center space-x-2"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.8, duration: 0.5 }}
+              >
               <Checkbox
                 id="acceptTerms"
                 name="acceptTerms"
@@ -217,29 +286,46 @@ const Register = () => {
                 onCheckedChange={(checked) => 
                   setFormData(prev => ({ ...prev, acceptTerms: checked as boolean }))
                 }
+                  className="border-white/20 data-[state=checked]:bg-[#b6ffb0] data-[state=checked]:border-[#b6ffb0]"
                 required
               />
-              <Label htmlFor="acceptTerms" className="text-sm">
+                <Label htmlFor="acceptTerms" className="text-sm text-white/90">
                 J'accepte les{' '}
-                <Link to="/terms" className="text-primary hover:underline">
+                  <Link to="/terms" className="text-[#b6ffb0] hover:text-white transition-colors">
                   conditions générales
                 </Link>
               </Label>
-            </div>
+              </motion.div>
 
-            <Button type="submit" className="w-full" disabled={!formData.acceptTerms || isSubmitting}>
-              {isSubmitting ? 'Création du compte...' : 'Créer mon compte'}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.9, duration: 0.5 }}
+              >
+                <Button 
+                  type="submit" 
+                  className="w-full bg-gradient-to-r from-[#b6ffb0] to-[#4ecdc4] text-black font-semibold hover:from-[#4ecdc4] hover:to-[#b6ffb0] transition-all duration-300 shadow-lg" 
+                  disabled={!formData.acceptTerms || isSubmitting}
+                >
+                  {isSubmitting ? 'Création du compte...' : 'Créer mon compte'}
             </Button>
+              </motion.div>
           </form>
 
-          <div className="mt-6 text-center text-sm">
-            <span className="text-muted-foreground">Déjà un compte ? </span>
-            <Link to="/login" className="text-primary hover:underline font-medium">
+            <motion.div 
+              className="mt-8 text-center text-sm"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.0, duration: 0.5 }}
+            >
+              <span className="text-white/70">Déjà un compte ? </span>
+              <Link to="/login" className="text-[#b6ffb0] hover:text-white transition-colors font-medium">
               Se connecter
             </Link>
-          </div>
+            </motion.div>
         </CardContent>
       </Card>
+      </motion.div>
     </div>
   );
 };

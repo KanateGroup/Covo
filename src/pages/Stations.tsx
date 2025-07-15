@@ -4,9 +4,23 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { MapPin, Car, Bike, Zap, QrCode, Phone, Clock } from 'lucide-react';
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogClose
+} from '@/components/ui/dialog';
+import { MessageCircle } from 'lucide-react';
 
 const Stations = () => {
   const [selectedStation, setSelectedStation] = useState(null);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [chatAgent, setChatAgent] = useState<any>(null);
+  const [chatMessages, setChatMessages] = useState<any[]>([]);
+  const [chatInput, setChatInput] = useState('');
 
   // Mock data pour les stations
   const stations = [
@@ -113,10 +127,28 @@ const Stations = () => {
     window.location.href = `tel:${phone}`;
   };
 
+  const handleOpenChat = (agent: any) => {
+    setChatAgent(agent);
+    setChatMessages([
+      { from: 'agent', text: `Bonjour, je suis ${agent.name}, comment puis-je vous aider ?` }
+    ]);
+    setChatOpen(true);
+  };
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!chatInput.trim()) return;
+    setChatMessages((msgs) => [...msgs, { from: 'user', text: chatInput }]);
+    setChatInput('');
+    setTimeout(() => {
+      setChatMessages((msgs) => [...msgs, { from: 'agent', text: 'Merci pour votre message, un agent va vous répondre.' }]);
+    }, 1200);
+  };
+
   return (
-    <div className="min-h-screen bg-muted/30 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-6xl">
-        <h1 className="text-3xl font-bold mb-8 text-center">Stations de service</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-white">Stations de service</h1>
         
         {/* Carte interactive placeholder */}
         <Card className="mb-8">
@@ -219,14 +251,15 @@ const Stations = () => {
 
                 {/* Actions */}
                 <div className="flex space-x-2">
-                  <Button
-                    className="flex-1"
-                    onClick={() => handleScanQr(station.id)}
-                    disabled={station.agent.status !== 'online'}
-                  >
-                    <QrCode className="mr-2 h-4 w-4" />
-                    Scanner QR
-                  </Button>
+                  {station.agent.status === 'online' && (
+                    <Button
+                      className="flex-1"
+                      onClick={() => handleOpenChat(station.agent)}
+                    >
+                      <MessageCircle className="mr-2 h-4 w-4" />
+                      Chat avec l’agent
+                    </Button>
+                  )}
                   <Button variant="outline" asChild>
                     <a
                       href={`https://maps.google.com/?q=${station.coordinates.lat},${station.coordinates.lng}`}
@@ -265,6 +298,45 @@ const Stations = () => {
           </CardContent>
         </Card>
       </div>
+      <Dialog open={chatOpen} onOpenChange={setChatOpen}>
+        <DialogContent className="max-w-md bg-white/10 backdrop-blur-2xl border-white/20 shadow-2xl animate-in animate-fade-in animate-slide-in-from-top-8">
+          <DialogHeader>
+            <DialogTitle className="text-lg font-bold text-primary flex items-center gap-2">
+              <MessageCircle className="text-primary" />
+              Chat avec l’agent {chatAgent?.name ? `: ${chatAgent.name}` : ''}
+            </DialogTitle>
+          </DialogHeader>
+          <div className="h-64 overflow-y-auto flex flex-col gap-2 p-2 bg-black/20 rounded-lg mb-2">
+            {chatMessages.map((msg, idx) => (
+              <div key={idx} className={msg.from === 'user' ? 'text-right' : 'text-left'}>
+                <span className={
+                  'inline-block px-3 py-2 rounded-xl ' +
+                  (msg.from === 'user'
+                    ? 'bg-gradient-to-r from-[#b6ffb0] to-[#4ecdc4] text-black'
+                    : 'bg-white/10 text-white')
+                }>
+                  {msg.text}
+                </span>
+              </div>
+            ))}
+          </div>
+          <form onSubmit={handleSendMessage} className="flex gap-2">
+            <input
+              type="text"
+              value={chatInput}
+              onChange={e => setChatInput(e.target.value)}
+              placeholder="Écrivez votre message..."
+              className="flex-1 rounded-lg px-3 py-2 bg-white/20 text-white border border-white/20 focus:outline-none"
+            />
+            <Button type="submit" className="bg-primary text-white">Envoyer</Button>
+          </form>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant="outline">Fermer</Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

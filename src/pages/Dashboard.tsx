@@ -4,7 +4,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Car, MapPin, Calendar, Star, User, Phone, Mail, Edit, Trash2 } from 'lucide-react';
+import { Car, MapPin, Calendar, Star, User, Phone, Mail, Edit, Trash2, TrendingUp, Users, CreditCard } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Dashboard = () => {
   const [user] = useState({
@@ -94,102 +95,99 @@ const Dashboard = () => {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'active':
-        return <Badge variant="default">Actif</Badge>;
+        return <Badge className="bg-[#b6ffb0] text-black hover:bg-[#b6ffb0]/90">Actif</Badge>;
       case 'completed':
-        return <Badge variant="secondary">Terminé</Badge>;
+        return <Badge className="bg-[#4ecdc4] text-black hover:bg-[#4ecdc4]/90">Terminé</Badge>;
       case 'confirmed':
-        return <Badge variant="default">Confirmé</Badge>;
+        return <Badge className="bg-[#45b7d1] text-black hover:bg-[#45b7d1]/90">Confirmé</Badge>;
       case 'upcoming':
-        return <Badge className="bg-blue-500 hover:bg-blue-600">À venir</Badge>;
+        return <Badge className="bg-[#ff6b6b] text-white hover:bg-[#ff6b6b]/90">À venir</Badge>;
       default:
-        return <Badge variant="outline">{status}</Badge>;
+        return <Badge className="bg-white/10 text-white border-white/20">{status}</Badge>;
     }
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-6xl">
-        <h1 className="text-3xl font-bold mb-8">Mon tableau de bord</h1>
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+        >
+          <h1 className="text-3xl font-bold mb-8 text-white">Mon tableau de bord</h1>
+        </motion.div>
         
         {/* Statistiques utilisateur */}
         <div className="grid md:grid-cols-4 gap-6 mb-8">
-          <Card>
+          {[
+            { label: 'Note moyenne', value: `${user.rating}/5`, icon: Star, color: '#b6ffb0' },
+            { label: 'Trajets effectués', value: user.totalTrips, icon: Car, color: '#4ecdc4' },
+            { label: 'Locations', value: user.totalRentals, icon: MapPin, color: '#45b7d1' },
+            { label: 'Économies', value: '45k CFA', icon: CreditCard, color: '#ff6b6b' },
+          ].map((stat, index) => (
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 50 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+            >
+              <Card className="backdrop-blur-xl bg-white/5 border-white/10 hover:border-white/20 transition-all duration-300 hover:scale-105 shadow-2xl">
             <CardContent className="pt-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-muted-foreground">Note moyenne</p>
-                  <p className="text-2xl font-bold">{user.rating}/5</p>
+                      <p className="text-sm font-medium text-white/70">{stat.label}</p>
+                      <p className="text-lg font-bold text-white">{stat.value}</p>
                 </div>
-                <Star className="h-8 w-8 text-secondary" />
+                    <stat.icon className="h-8 w-8" style={{ color: stat.color }} />
               </div>
             </CardContent>
           </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Trajets effectués</p>
-                  <p className="text-2xl font-bold">{user.totalTrips}</p>
-                </div>
-                <Car className="h-8 w-8 text-primary" />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Locations</p>
-                  <p className="text-2xl font-bold">{user.totalRentals}</p>
-                </div>
-                <MapPin className="h-8 w-8 text-secondary" />
-              </div>
-            </CardContent>
-          </Card>
-          
-          <Card>
-            <CardContent className="pt-6">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-muted-foreground">Économies</p>
-                  <p className="text-2xl font-bold">45k CFA</p>
-                </div>
-                <div className="text-green-500 text-2xl font-bold">💰</div>
-              </div>
-            </CardContent>
-          </Card>
+            </motion.div>
+          ))}
         </div>
 
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+        >
         <Tabs defaultValue="trips" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="trips">Mes trajets</TabsTrigger>
-            <TabsTrigger value="bookings">Mes réservations</TabsTrigger>
-            <TabsTrigger value="rentals">Mes locations</TabsTrigger>
-            <TabsTrigger value="profile">Mon profil</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-4 bg-white/5 border-white/10">
+              <TabsTrigger value="trips" className="data-[state=active]:bg-[#b6ffb0] data-[state=active]:text-black">Mes trajets</TabsTrigger>
+              <TabsTrigger value="bookings" className="data-[state=active]:bg-[#b6ffb0] data-[state=active]:text-black">Mes réservations</TabsTrigger>
+              <TabsTrigger value="rentals" className="data-[state=active]:bg-[#b6ffb0] data-[state=active]:text-black">Mes locations</TabsTrigger>
+              <TabsTrigger value="profile" className="data-[state=active]:bg-[#b6ffb0] data-[state=active]:text-black">Mon profil</TabsTrigger>
           </TabsList>
 
           {/* Mes trajets proposés */}
           <TabsContent value="trips" className="space-y-4">
             <div className="flex justify-between items-center">
-              <h2 className="text-2xl font-semibold">Mes trajets proposés</h2>
-              <Button>Proposer un trajet</Button>
+                <h2 className="text-xl font-semibold text-white">Mes trajets proposés</h2>
+                <Button className="bg-gradient-to-r from-[#b6ffb0] to-[#4ecdc4] text-black font-semibold hover:from-[#4ecdc4] hover:to-[#b6ffb0] transition-all duration-300">
+                  Proposer un trajet
+                </Button>
             </div>
             
-            {myTrips.map((trip) => (
-              <Card key={trip.id}>
+              {myTrips.map((trip, index) => (
+                <motion.div
+                  key={trip.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card className="backdrop-blur-xl bg-white/5 border-white/10 hover:border-white/20 transition-all duration-300">
                 <CardContent className="pt-6">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center mb-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground mr-2" />
-                        <span className="font-medium">{trip.from} → {trip.to}</span>
-                        {getStatusBadge(trip.status)}
+                            <MapPin className="h-4 w-4 text-[#b6ffb0] mr-2" />
+                            <span className="font-medium text-white">{trip.from} → {trip.to}</span>
+                            <div className="ml-2">{getStatusBadge(trip.status)}</div>
                       </div>
-                      <div className="grid md:grid-cols-3 gap-4 text-sm text-muted-foreground">
+                          <div className="grid md:grid-cols-3 gap-4 text-sm text-white/70">
                         <div className="flex items-center">
-                          <Calendar className="h-4 w-4 mr-1" />
+                              <Calendar className="h-4 w-4 mr-1 text-[#b6ffb0]" />
                           {trip.date} à {trip.time}
                         </div>
                         <div>
@@ -201,173 +199,173 @@ const Dashboard = () => {
                       </div>
                     </div>
                     <div className="flex space-x-2">
-                      <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="border-white/20 text-white hover:bg-white/10">
                         <Edit className="h-4 w-4" />
                       </Button>
-                      <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" className="border-red-500/20 text-red-400 hover:bg-red-500/10">
                         <Trash2 className="h-4 w-4" />
                       </Button>
                     </div>
                   </div>
                 </CardContent>
               </Card>
+                </motion.div>
             ))}
           </TabsContent>
 
           {/* Mes réservations */}
           <TabsContent value="bookings" className="space-y-4">
-            <h2 className="text-2xl font-semibold">Mes réservations de covoiturage</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-white">Mes réservations</h2>
+              </div>
             
-            {myBookings.map((booking) => (
-              <Card key={booking.id}>
+              {myBookings.map((booking, index) => (
+                <motion.div
+                  key={booking.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card className="backdrop-blur-xl bg-white/5 border-white/10 hover:border-white/20 transition-all duration-300">
                 <CardContent className="pt-6">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center mb-2">
-                        <User className="h-4 w-4 text-muted-foreground mr-2" />
-                        <span className="font-medium">Conducteur: {booking.driver}</span>
-                        <div className="flex items-center ml-4">
-                          <Star className="h-4 w-4 text-secondary fill-current mr-1" />
-                          <span className="text-sm">{booking.driverRating}</span>
+                            <User className="h-4 w-4 text-[#b6ffb0] mr-2" />
+                            <span className="font-medium text-white">{booking.driver}</span>
+                            <div className="ml-2">{getStatusBadge(booking.status)}</div>
                         </div>
-                        {getStatusBadge(booking.status)}
+                          <div className="grid md:grid-cols-3 gap-4 text-sm text-white/70">
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-1 text-[#b6ffb0]" />
+                              {booking.from} → {booking.to}
                       </div>
-                      <div className="flex items-center mb-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground mr-2" />
-                        <span>{booking.from} → {booking.to}</span>
-                      </div>
-                      <div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center">
-                          <Calendar className="h-4 w-4 mr-1" />
+                              <Calendar className="h-4 w-4 mr-1 text-[#b6ffb0]" />
                           {booking.date} à {booking.time}
                         </div>
-                        <div className="font-medium text-primary">
-                          {booking.price} CFA
+                            <div className="flex items-center">
+                              <Star className="h-4 w-4 mr-1 text-[#b6ffb0]" />
+                              {booking.driverRating}/5 - {booking.price} CFA
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    {booking.status === 'completed' && (
-                      <Button size="sm" variant="outline">
-                        Noter le trajet
-                      </Button>
-                    )}
                   </div>
                 </CardContent>
               </Card>
+                </motion.div>
             ))}
           </TabsContent>
 
           {/* Mes locations */}
           <TabsContent value="rentals" className="space-y-4">
-            <h2 className="text-2xl font-semibold">Mes locations de véhicules</h2>
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-white">Mes locations</h2>
+              </div>
             
-            {myRentals.map((rental) => (
-              <Card key={rental.id}>
+              {myRentals.map((rental, index) => (
+                <motion.div
+                  key={rental.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: index * 0.1 }}
+                >
+                  <Card className="backdrop-blur-xl bg-white/5 border-white/10 hover:border-white/20 transition-all duration-300">
                 <CardContent className="pt-6">
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <div className="flex items-center mb-2">
-                        <Car className="h-4 w-4 text-muted-foreground mr-2" />
-                        <span className="font-medium">{rental.vehicle}</span>
-                        {getStatusBadge(rental.status)}
+                            <Car className="h-4 w-4 text-[#b6ffb0] mr-2" />
+                            <span className="font-medium text-white">{rental.vehicle}</span>
+                            <div className="ml-2">{getStatusBadge(rental.status)}</div>
                       </div>
-                      <div className="flex items-center mb-2">
-                        <MapPin className="h-4 w-4 text-muted-foreground mr-2" />
-                        <span>{rental.station}</span>
+                          <div className="grid md:grid-cols-3 gap-4 text-sm text-white/70">
+                            <div className="flex items-center">
+                              <MapPin className="h-4 w-4 mr-1 text-[#b6ffb0]" />
+                              {rental.station}
                       </div>
-                      <div className="grid md:grid-cols-2 gap-4 text-sm text-muted-foreground">
                         <div className="flex items-center">
-                          <Calendar className="h-4 w-4 mr-1" />
-                          Du {rental.startDate} au {rental.endDate}
+                              <Calendar className="h-4 w-4 mr-1 text-[#b6ffb0]" />
+                              {rental.startDate} - {rental.endDate}
                         </div>
-                        <div className="font-medium text-primary">
+                            <div className="flex items-center">
+                              <CreditCard className="h-4 w-4 mr-1 text-[#b6ffb0]" />
                           {rental.total} CFA
                         </div>
                       </div>
                     </div>
-                    {rental.status === 'upcoming' && (
-                      <Button size="sm" variant="outline">
-                        Voir QR Code
-                      </Button>
-                    )}
                   </div>
                 </CardContent>
               </Card>
+                </motion.div>
             ))}
           </TabsContent>
 
           {/* Mon profil */}
-          <TabsContent value="profile">
-            <Card>
-              <CardHeader>
-                <CardTitle>Mon profil</CardTitle>
-                <CardDescription>
-                  Gérez vos informations personnelles
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
+            <TabsContent value="profile" className="space-y-4">
+              <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-white">Mon profil</h2>
+                <Button className="bg-gradient-to-r from-[#b6ffb0] to-[#4ecdc4] text-black font-semibold hover:from-[#4ecdc4] hover:to-[#b6ffb0] transition-all duration-300">
+                  <Edit className="h-4 w-4 mr-2" />
+                  Modifier
+                </Button>
+              </div>
+              
+              <Card className="backdrop-blur-xl bg-white/5 border-white/10">
+                <CardContent className="pt-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold">Informations personnelles</h3>
-                    <div className="space-y-3">
                       <div className="flex items-center">
-                        <User className="h-4 w-4 text-muted-foreground mr-3" />
+                        <User className="h-5 w-5 text-[#b6ffb0] mr-3" />
                         <div>
-                          <p className="font-medium">{user.firstName} {user.lastName}</p>
-                          <p className="text-sm text-muted-foreground">Nom complet</p>
+                          <p className="text-sm text-white/70">Nom complet</p>
+                          <p className="text-white font-medium">{user.firstName} {user.lastName}</p>
                         </div>
                       </div>
                       <div className="flex items-center">
-                        <Mail className="h-4 w-4 text-muted-foreground mr-3" />
+                        <Mail className="h-5 w-5 text-[#b6ffb0] mr-3" />
                         <div>
-                          <p className="font-medium">{user.email}</p>
-                          <p className="text-sm text-muted-foreground">Adresse email</p>
+                          <p className="text-sm text-white/70">Email</p>
+                          <p className="text-white font-medium">{user.email}</p>
                         </div>
                       </div>
                       <div className="flex items-center">
-                        <Phone className="h-4 w-4 text-muted-foreground mr-3" />
+                        <Phone className="h-5 w-5 text-[#b6ffb0] mr-3" />
                         <div>
-                          <p className="font-medium">{user.phone}</p>
-                          <p className="text-sm text-muted-foreground">Numéro de téléphone</p>
+                          <p className="text-sm text-white/70">Téléphone</p>
+                          <p className="text-white font-medium">{user.phone}</p>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
                   <div className="space-y-4">
-                    <h3 className="text-lg font-semibold">Statistiques</h3>
-                    <div className="space-y-3">
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Note moyenne</span>
                         <div className="flex items-center">
-                          <Star className="h-4 w-4 text-secondary fill-current mr-1" />
-                          <span className="font-medium">{user.rating}/5</span>
+                        <Star className="h-5 w-5 text-[#b6ffb0] mr-3" />
+                        <div>
+                          <p className="text-sm text-white/70">Note moyenne</p>
+                          <p className="text-white font-medium">{user.rating}/5</p>
                         </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Trajets proposés</span>
-                        <span className="font-medium">{myTrips.length}</span>
+                      <div className="flex items-center">
+                        <Car className="h-5 w-5 text-[#b6ffb0] mr-3" />
+                        <div>
+                          <p className="text-sm text-white/70">Trajets effectués</p>
+                          <p className="text-white font-medium">{user.totalTrips}</p>
+                        </div>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Réservations</span>
-                        <span className="font-medium">{myBookings.length}</span>
+                      <div className="flex items-center">
+                        <MapPin className="h-5 w-5 text-[#b6ffb0] mr-3" />
+                        <div>
+                          <p className="text-sm text-white/70">Locations</p>
+                          <p className="text-white font-medium">{user.totalRentals}</p>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Locations</span>
-                        <span className="font-medium">{myRentals.length}</span>
                       </div>
                     </div>
-                  </div>
-                </div>
-                
-                <div className="flex space-x-4">
-                  <Button>Modifier le profil</Button>
-                  <Button variant="outline">Changer le mot de passe</Button>
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
         </Tabs>
+        </motion.div>
       </div>
     </div>
   );

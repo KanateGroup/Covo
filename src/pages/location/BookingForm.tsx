@@ -74,11 +74,11 @@ const BookingForm = () => {
 
   if (showQR) {
     return (
-      <div className="min-h-screen bg-muted/30 p-4">
+      <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
         <div className="container mx-auto max-w-2xl">
           <Card className="shadow-lg">
             <CardHeader className="text-center bg-primary text-primary-foreground">
-              <CardTitle className="text-2xl">Réservation confirmée !</CardTitle>
+              <CardTitle className="text-xl">Réservation confirmée !</CardTitle>
               <CardDescription className="text-primary-foreground/80">
                 Voici votre QR code de réservation
               </CardDescription>
@@ -147,9 +147,9 @@ const BookingForm = () => {
   }
 
   return (
-    <div className="min-h-screen bg-muted/30 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-4xl">
-        <h1 className="text-3xl font-bold mb-8 text-center">Réserver un véhicule</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-white">Réserver un véhicule</h1>
         
         <div className="grid md:grid-cols-2 gap-8">
           {/* Formulaire de réservation */}

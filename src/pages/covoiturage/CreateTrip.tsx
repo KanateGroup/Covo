@@ -8,7 +8,9 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ArrowLeft, Car, MapPin, Clock, Users, DollarSign, Plus } from 'lucide-react';
+import { Car, MapPin, Clock, Users, DollarSign, Plus } from 'lucide-react';
+import { useTrips } from '@/contexts/TripContext';
+import { useToast } from '@/hooks/use-toast';
 
 const CreateTrip = () => {
   const [tripData, setTripData] = useState({
@@ -69,19 +71,9 @@ const CreateTrip = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-muted/30 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-2xl">
-        {/* Header avec bouton retour */}
-        <div className="flex items-center mb-6">
-          <Link to="/covoiturage">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Retour à la recherche
-            </Button>
-          </Link>
-        </div>
-
-        <h1 className="text-3xl font-bold mb-8 text-center">Proposer un trajet</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-white">Proposer un trajet</h1>
 
         <Card>
           <CardHeader>

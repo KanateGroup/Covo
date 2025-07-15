@@ -1,13 +1,26 @@
 
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { ArrowLeft, QrCode, CheckCircle, AlertCircle, User, Car, MapPin, Clock, DollarSign } from 'lucide-react';
+import { QrCode, CheckCircle, AlertCircle, User, Car, MapPin, Clock, DollarSign } from 'lucide-react';
 
 const AgentScan = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const code = localStorage.getItem('agent_access_code');
+    if (code !== 'AGENT-2024') {
+      navigate('/agent/login');
+    }
+  }, [navigate]);
+
+  const handleLogout = () => {
+    localStorage.removeItem('agent_access_code');
+    navigate('/agent/login');
+  };
+
   const [scannedData, setScannedData] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('');
   const [paymentCompleted, setPaymentCompleted] = useState(false);
@@ -79,18 +92,14 @@ const AgentScan = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-2xl">
-        <div className="flex items-center mb-6">
-          <Link to="/stations">
-            <Button variant="ghost" size="sm">
-              <ArrowLeft className="h-4 w-4 mr-2" />
-              Retour aux stations
-            </Button>
-          </Link>
+        <div className="flex justify-end mb-2">
+          <Button size="sm" variant="outline" onClick={handleLogout}>
+            Déconnexion
+          </Button>
         </div>
-
-        <h1 className="text-3xl font-bold mb-8 text-center">Scanner QR - Agent</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-white">Scanner QR - Agent</h1>
 
         {!scannedData ? (
           <Card>

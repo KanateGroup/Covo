@@ -139,10 +139,10 @@ const AdminDashboard = () => {
   };
 
   return (
-    <div className="min-h-screen bg-muted/30 p-4">
+    <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-7xl">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Administration COVO</h1>
+          <h1 className="text-2xl font-bold text-white">Administration COVO</h1>
           <Button>
             <BarChart3 className="mr-2 h-4 w-4" />
             Rapport complet
