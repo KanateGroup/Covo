@@ -8,12 +8,17 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { toast } from 'sonner';
 import useSound from 'use-sound';
 
-const notificationSound = '/public/notification.mp3'; // Place un son court dans public/
+// Correction du chemin du son de notification
+const notificationSound = '/notification.mp3'; // Placez notification.mp3 dans public/
 
+// QrReader import dynamique ES modules
 let QrReader: any = null;
-try {
-  QrReader = require('react-qr-reader').QrReader || require('react-qr-reader').default;
-} catch {}
+(async () => {
+  try {
+    const mod = await import('react-qr-reader');
+    QrReader = mod.QrReader || mod.default;
+  } catch {}
+})();
 
 // Mock parsing QR
 function parseQR(data: string) {
@@ -567,4 +572,20 @@ const AgentDashboard = () => {
                           <div className="flex gap-1 mb-1">
                             <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${loc.timeline.includes('en attente') ? 'bg-yellow-400/80 text-black' : 'bg-white/10 text-white/50'}`}>En attente</span>
                             <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${loc.timeline.includes('démarrée') ? 'bg-green-400/80 text-black' : 'bg-white/10 text-white/50'}`}>Démarrée</span>
-                            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${loc.timeline.includes('terminée') ? 'bg-blue-400/80 text-black' : 'bg-white/10 text-white/50'}`
+                            <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${loc.timeline.includes('terminée') ? 'bg-blue-400/80 text-black' : 'bg-white/10 text-white/50'}`}>Terminée</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.section>
+          )}
+        </AnimatePresence>
+      </main>
+    </div>
+  );
+};
+
+export default AgentDashboard;
