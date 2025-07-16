@@ -6,20 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { QrCode, CheckCircle, AlertCircle, User, Car, MapPin, Clock, DollarSign } from 'lucide-react';
+import AgentMessaging from '@/components/AgentMessaging';
+import { useAgentAuth } from '@/hooks/useAgentAuth';
 
 const AgentScan = () => {
-  const navigate = useNavigate();
-  useEffect(() => {
-    const code = localStorage.getItem('agent_access_code');
-    if (code !== 'AGENT-2024') {
-      navigate('/agent/login');
-    }
-  }, [navigate]);
-
-  const handleLogout = () => {
-    localStorage.removeItem('agent_access_code');
-    navigate('/agent/login');
-  };
+  const { logout } = useAgentAuth({ redirectToLogin: true });
 
   const [scannedData, setScannedData] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState('');
@@ -95,7 +86,7 @@ const AgentScan = () => {
     <div className="min-h-screen bg-gradient-to-br from-[#0a1a13] via-[#0e2233] to-[#1a2a2f] pt-20 p-4">
       <div className="container mx-auto max-w-2xl">
         <div className="flex justify-end mb-2">
-          <Button size="sm" variant="outline" onClick={handleLogout}>
+          <Button size="sm" variant="outline" onClick={logout}>
             Déconnexion
           </Button>
         </div>
@@ -300,6 +291,8 @@ const AgentScan = () => {
           </div>
         )}
       </div>
+      {/* Messagerie agent en bas à droite */}
+      <AgentMessaging />
     </div>
   );
 };
