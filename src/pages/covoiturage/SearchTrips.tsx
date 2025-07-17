@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -23,88 +23,14 @@ const SearchTrips = () => {
   const [searchResults, setSearchResults] = useState<any[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
   
-  const { searchTrips, bookTrip, isLoading } = useTrips();
+  const { searchTrips, bookTrip, isLoading, trips } = useTrips();
   const { isAuthenticated } = useAuth();
   const { toast } = useToast();
 
-  // Mock data pour les résultats de recherche
-  const mockTrips = [
-    {
-      id: 1,
-      driver: {
-        name: 'Mamadou Diop',
-        rating: 4.8,
-        photo: '/placeholder.svg',
-        verified: true,
-        trips: 127,
-      },
-      departure: 'Plateau',
-      destination: 'Almadies',
-      departureTime: '14:30',
-      arrivalTime: '15:15',
-      price: 1500,
-      availableSeats: 3,
-      vehicle: {
-        make: 'Toyota',
-        model: 'Corolla',
-        color: 'Blanc',
-        year: 2022,
-      },
-      amenities: ['Climatisation', 'Musique', 'WiFi'],
-      distance: '12 km',
-      duration: '45 min',
-    },
-    {
-      id: 2,
-      driver: {
-        name: 'Aïcha Sow',
-        rating: 4.9,
-        photo: '/placeholder.svg',
-        verified: true,
-        trips: 89,
-      },
-      departure: 'Plateau',
-      destination: 'Almadies',
-      departureTime: '15:00',
-      arrivalTime: '15:45',
-      price: 1200,
-      availableSeats: 2,
-      vehicle: {
-        make: 'Hyundai',
-        model: 'i20',
-        color: 'Bleu',
-        year: 2023,
-      },
-      amenities: ['Climatisation', 'Non-fumeur'],
-      distance: '12 km',
-      duration: '45 min',
-    },
-    {
-      id: 3,
-      driver: {
-        name: 'Ousmane Ba',
-        rating: 4.7,
-        photo: '/placeholder.svg',
-        verified: false,
-        trips: 45,
-      },
-      departure: 'Plateau',
-      destination: 'Almadies',
-      departureTime: '16:30',
-      arrivalTime: '17:20',
-      price: 1800,
-      availableSeats: 1,
-      vehicle: {
-        make: 'Mercedes',
-        model: 'Classe A',
-        color: 'Noir',
-        year: 2021,
-      },
-      amenities: ['Climatisation', 'Musique', 'WiFi', 'Luxe'],
-      distance: '12 km',
-      duration: '50 min',
-    },
-  ];
+  // Afficher tous les trajets par défaut au chargement
+  useEffect(() => {
+    setSearchResults(trips);
+  }, [trips]);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -274,7 +200,7 @@ const SearchTrips = () => {
           className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
         >
           {[
-            { label: 'Trajets disponibles', value: mockTrips.length, icon: Route, color: '#b6ffb0' },
+            { label: 'Trajets disponibles', value: searchResults.length, icon: Route, color: '#b6ffb0' },
             { label: 'Conducteurs actifs', value: 156, icon: Users, color: '#4ecdc4' },
             { label: 'Note moyenne', value: '4.8/5', icon: Star, color: '#45b7d1' },
             { label: 'Économies moyennes', value: '60%', icon: Shield, color: '#ff6b6b' },
@@ -297,7 +223,7 @@ const SearchTrips = () => {
         </motion.div>
 
         {/* Résultats de recherche */}
-        {hasSearched && (
+        {(searchResults.length > 0) && (
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -305,7 +231,7 @@ const SearchTrips = () => {
             className="space-y-6"
           >
             <h2 className="text-2xl font-bold text-white mb-6">Trajets disponibles</h2>
-            {mockTrips.map((trip, index) => (
+            {searchResults.map((trip, index) => (
               <motion.div
                 key={trip.id}
                 initial={{ opacity: 0, x: -50 }}

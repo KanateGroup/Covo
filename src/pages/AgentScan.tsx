@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { QrCode, CheckCircle, AlertCircle, User, Car, MapPin, Clock, DollarSign } from 'lucide-react';
-import AgentMessaging from '@/components/AgentMessaging';
+// import AgentMessaging from '@/components/AgentMessaging';
 import { useAgentAuth } from '@/hooks/useAgentAuth';
 
 const AgentScan = () => {
@@ -292,7 +292,7 @@ const AgentScan = () => {
         )}
       </div>
       {/* Messagerie agent en bas à droite */}
-      <AgentMessaging />
+      {/* AgentMessaging component was removed, so this section is now empty */}
     </div>
   );
 };

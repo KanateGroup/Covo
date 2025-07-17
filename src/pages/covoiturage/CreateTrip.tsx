@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -28,11 +28,41 @@ const CreateTrip = () => {
     allowPets: false,
     smokingAllowed: false,
   });
+  const { createTrip, isLoading } = useTrips();
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Création du trajet:', tripData);
-    // Ici vous ajouterez la logique de création de trajet
+    // Construction de l'objet attendu par createTrip
+    const tripToCreate = {
+      departure: tripData.departure,
+      destination: tripData.destination,
+      departureTime: tripData.time,
+      date: tripData.date,
+      price: Number(tripData.price),
+      availableSeats: Number(tripData.availableSeats),
+      vehicle: {
+        make: tripData.vehicle,
+        model: tripData.vehicle,
+        color: tripData.vehicleColor,
+      },
+      amenities: tripData.amenities,
+    };
+    const success = await createTrip(tripToCreate);
+    if (success) {
+      toast({
+        title: 'Trajet publié',
+        description: 'Votre trajet a été publié avec succès !',
+      });
+      navigate('/covoiturage');
+    } else {
+      toast({
+        title: 'Erreur',
+        description: 'Impossible de publier le trajet',
+        variant: 'destructive',
+      });
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -296,9 +326,9 @@ const CreateTrip = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full">
+              <Button type="submit" className="w-full" disabled={isLoading}>
                 <Plus className="mr-2 h-4 w-4" />
-                Publier mon trajet
+                {isLoading ? 'Publication...' : 'Publier mon trajet'}
               </Button>
             </form>
           </CardContent>

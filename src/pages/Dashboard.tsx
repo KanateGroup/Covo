@@ -6,6 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Car, MapPin, Calendar, Star, User, Phone, Mail, Edit, Trash2, TrendingUp, Users, CreditCard } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [user] = useState({
@@ -17,6 +18,7 @@ const Dashboard = () => {
     totalTrips: 24,
     totalRentals: 8,
   });
+  const navigate = useNavigate();
 
   // Mock data pour les trajets proposés
   const myTrips = [
@@ -164,7 +166,7 @@ const Dashboard = () => {
           <TabsContent value="trips" className="space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-white">Mes trajets proposés</h2>
-                <Button className="bg-gradient-to-r from-[#b6ffb0] to-[#4ecdc4] text-black font-semibold hover:from-[#4ecdc4] hover:to-[#b6ffb0] transition-all duration-300">
+                <Button className="bg-gradient-to-r from-[#b6ffb0] to-[#4ecdc4] text-black font-semibold hover:from-[#4ecdc4] hover:to-[#b6ffb0] transition-all duration-300" onClick={() => navigate('/covoiturage/create')}>
                   Proposer un trajet
                 </Button>
             </div>
