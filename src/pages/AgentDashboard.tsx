@@ -12,13 +12,13 @@ import useSound from 'use-sound';
 const notificationSound = '/notification.mp3'; // Placez notification.mp3 dans public/
 
 // QrReader import dynamique ES modules
-let QrReader: any = null;
-(async () => {
-  try {
-    const mod = await import('react-qr-reader');
-    QrReader = mod.QrReader || mod.default;
-  } catch {}
-})();
+// let QrReader: any = null;
+// (async () => {
+//   try {
+//     const mod = await import('react-qr-reader');
+//     QrReader = mod.QrReader || mod.default;
+//   } catch {}
+// })();
 
 // Mock parsing QR
 function parseQR(data: string) {
@@ -344,18 +344,10 @@ const AgentDashboard = () => {
                 <CardContent className="flex flex-col items-center justify-center py-12">
                   {!scanned && (
                     <>
-                      {scanning && QrReader ? (
+                      {scanning && (
                         <div className="w-full flex flex-col items-center">
                           <div className="w-64 h-64 rounded-2xl overflow-hidden border-2 border-[#C4A91C]/40 shadow-xl relative bg-black">
-                            <QrReader
-                              constraints={{ facingMode: 'environment' }}
-                              onResult={(result: any, error: any) => {
-                                if (!!result) handleScan(result?.text);
-                                if (!!error) setScanError('Erreur de scan ou QR non détecté');
-                              }}
-                              style={{ width: '100%', height: '100%' }}
-                            />
-                            {/* Animation laser */}
+                            <QrCode className="h-24 w-24 text-[#C4A91C] z-10" />
                             <motion.div
                               className="absolute left-0 right-0 top-1/2 h-1 bg-[#C4A91C]/60 rounded-full blur-sm"
                               animate={{ x: [0, 220, 0] }}
@@ -364,32 +356,6 @@ const AgentDashboard = () => {
                           </div>
                           <Button variant="outline" className="mt-4" onClick={() => setScanning(false)}>Annuler</Button>
                         </div>
-                      ) : (
-                        <>
-                          <motion.div
-                            className="w-40 h-40 rounded-2xl bg-gradient-to-br from-[#1B5B4A]/60 to-[#C4A91C]/20 flex items-center justify-center relative overflow-hidden shadow-xl border-2 border-[#C4A91C]/40"
-                            initial={{ scale: 0.8, opacity: 0 }}
-                            animate={{ scale: 1, opacity: 1 }}
-                            transition={{ delay: 0.2, duration: 0.7 }}
-                          >
-                            <motion.div
-                              className="absolute inset-0 border-4 border-dashed border-[#C4A91C]/60 rounded-2xl animate-pulse"
-                              animate={{ rotate: 360 }}
-                              transition={{ repeat: Infinity, duration: 6, ease: 'linear' }}
-                            />
-                            <QrCode className="h-24 w-24 text-[#C4A91C] z-10" />
-                            <motion.div
-                              className="absolute left-0 right-0 top-1/2 h-1 bg-[#C4A91C]/60 rounded-full blur-sm"
-                              animate={{ x: [0, 120, 0] }}
-                              transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
-                            />
-                          </motion.div>
-                          <div className="mt-6 text-center">
-                            <Button size="lg" onClick={() => { setScanning(true); setScanError(''); }} className="bg-gradient-to-r from-[#C4A91C] via-[#1B5B4A] to-[#C4A91C] text-black font-bold shadow-lg hover:from-[#1B5B4A] hover:to-[#C4A91C] hover:text-white transition-all duration-300 border-2 border-[#C4A91C]/40">
-                              Lancer le scan caméra
-                            </Button>
-                          </div>
-                        </>
                       )}
                       {scanError && <div className="text-red-500 text-sm mt-4">{scanError}</div>}
                     </>

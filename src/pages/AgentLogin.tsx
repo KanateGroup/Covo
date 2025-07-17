@@ -4,12 +4,21 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ShieldCheck, KeyRound } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useAgentAuth } from '@/hooks/useAgentAuth';
 
 const AgentLogin = () => {
+  const { isAgentAuthenticated } = useAgentAuth();
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
+
+  // Rediriger si déjà authentifié
+  React.useEffect(() => {
+    if (isAgentAuthenticated) {
+      navigate('/agent/scan');
+    }
+  }, [isAgentAuthenticated, navigate]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
