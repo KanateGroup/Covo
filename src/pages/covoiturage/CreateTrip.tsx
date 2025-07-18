@@ -79,7 +79,7 @@ const CreateTrip = () => {
           <CardHeader>
             <CardTitle className="flex items-center">
               <Plus className="mr-2 h-5 w-5" />
-              Créer un nouveau trajet
+              Créer un nouveau trajet !
             </CardTitle>
             <CardDescription>
               Partagez votre trajet et réduisez les coûts de transport
