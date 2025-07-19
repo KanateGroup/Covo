@@ -1,0 +1,135 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 160 56% 23%; /* vert foncé pour le texte sur fond clair */
+
+    --card: 0 0% 100%;
+    --card-foreground: 160 56% 23%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 160 56% 23%;
+
+    --primary: 160 56% 23%; /* #1B5B4A */
+    --primary-foreground: 0 0% 100%; /* blanc */
+
+    --secondary: 50 73% 44%; /* #C4A91C */
+    --secondary-foreground: 160 56% 23%;
+
+    --muted: 160 10% 95%;
+    --muted-foreground: 160 20% 45%;
+
+    --accent: 50 73% 44%; /* #C4A91C */
+    --accent-foreground: 160 56% 23%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 15% 85%;
+    --input: 160 15% 85%;
+    --ring: 160 56% 23%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 160 56% 23%;
+    --sidebar-primary: 160 56% 23%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 10% 95%;
+    --sidebar-accent-foreground: 160 56% 23%;
+    --sidebar-border: 160 15% 85%;
+    --sidebar-ring: 160 56% 23%;
+  }
+
+  .dark {
+    --background: 160 56% 8%; /* fond très sombre, nuance du vert foncé */
+    --foreground: 0 0% 100%; /* texte blanc */
+
+    --card: 160 56% 10%;
+    --card-foreground: 0 0% 100%;
+
+    --popover: 160 56% 10%;
+    --popover-foreground: 0 0% 100%;
+
+    --primary: 160 56% 23%; /* #1B5B4A */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 50 73% 44%; /* #C4A91C */
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 160 30% 15%;
+    --muted-foreground: 160 15% 65%;
+
+    --accent: 50 73% 44%; /* #C4A91C */
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 160 30% 18%;
+    --input: 160 30% 18%;
+    --ring: 160 56% 23%;
+
+    --sidebar-background: 160 56% 8%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 160 56% 23%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 160 30% 15%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 160 30% 18%;
+    --sidebar-ring: 160 56% 23%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Custom utilities */
+@layer utilities {
+  .text-gradient {
+    @apply bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent;
+  }
+  
+  .shadow-brand {
+    box-shadow: 0 4px 6px -1px rgba(27, 91, 74, 0.12), 0 2px 4px -1px rgba(196, 169, 28, 0.08);
+  }
+  
+  .hover-lift {
+    @apply transition-transform duration-200 hover:scale-105;
+  }
+}
+
+/* Masquer la scrollbar */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Effet de survol pour les thumbnails */
+.thumbnail-hover {
+  transition: all 0.3s ease;
+}
+
+.thumbnail-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
