@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # COVO - Plateforme de Covoiturage et Location
 
 COVO est une plateforme moderne de covoiturage et de location de véhicules développée avec React, TypeScript et Tailwind CSS.
@@ -191,7 +190,3 @@ Pour toute question ou problème :
 - Vérifiez les logs de la console
 - Testez les fonctionnalités une par une
 - Vérifiez la configuration dans `src/config/index.ts`
-=======
-# Covo
-Projet Covo kanate
->>>>>>> 1adf8b11801dd0081d115fe1e2606714745f3d6f
